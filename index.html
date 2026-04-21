@@ -1,1 +1,1194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KTC Biweekly Performance Dashboard — Baseline</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background: #f0f2f5; color: #1a1a2e; }
 
+  /* HEADER */
+  .header {
+    background: linear-gradient(135deg, #0a2540 0%, #1a3a5c 60%, #0d4a6e 100%);
+    color: white;
+    padding: 48px 60px;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 300px; height: 300px;
+    background: rgba(255,255,255,0.04);
+    border-radius: 50%;
+  }
+  .header::after {
+    content: '';
+    position: absolute;
+    bottom: -80px; left: 40%;
+    width: 400px; height: 400px;
+    background: rgba(255,255,255,0.03);
+    border-radius: 50%;
+  }
+  .header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  .header-badges {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+  }
+  .badge {
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+  }
+  .badge-confidential { background: rgba(255,255,255,0.12); color: #e2e8f0; border: 1px solid rgba(255,255,255,0.2); }
+  .badge-biweekly { background: #0ea5e9; color: white; }
+  .badge-baseline { background: #f59e0b; color: #1a1a2e; }
+  .badge-report { background: rgba(255,255,255,0.1); color: #e2e8f0; border: 1px solid rgba(255,255,255,0.15); }
+  .header h1 { font-size: 36px; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 8px; }
+  .header h1 span { color: #38bdf8; }
+  .header-sub { font-size: 15px; color: #94a3b8; margin-top: 6px; }
+  .header-meta { text-align: right; }
+  .header-meta .period { font-size: 13px; color: #94a3b8; margin-top: 8px; }
+  .header-logo { font-size: 13px; font-weight: 700; color: #38bdf8; letter-spacing: 1px; text-transform: uppercase; }
+
+  /* CADENCE BAR */
+  .cadence-bar {
+    background: #0f172a;
+    padding: 28px 60px;
+    display: flex;
+    gap: 0;
+    flex-wrap: wrap;
+    border-bottom: 3px solid #0ea5e9;
+  }
+  .cadence-block {
+    flex: 1;
+    min-width: 180px;
+    padding: 0 32px 0 0;
+    border-right: 1px solid rgba(255,255,255,0.08);
+    margin-right: 32px;
+  }
+  .cadence-block:last-child { border-right: none; margin-right: 0; }
+  .cadence-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: #0ea5e9;
+    margin-bottom: 6px;
+  }
+  .cadence-value {
+    font-size: 15px;
+    font-weight: 600;
+    color: #f1f5f9;
+    line-height: 1.4;
+  }
+  .cadence-note {
+    font-size: 11px;
+    color: #64748b;
+    margin-top: 4px;
+  }
+
+  /* MAIN CONTAINER */
+  .main {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 60px 60px;
+  }
+
+  /* SECTION */
+  .section {
+    margin-bottom: 72px;
+  }
+  .section-title {
+    font-size: 22px;
+    font-weight: 800;
+    color: #0a2540;
+    margin-bottom: 8px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid #e2e8f0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-title .icon {
+    width: 32px; height: 32px;
+    background: #0ea5e9;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+  }
+  .section-subtitle {
+    font-size: 13px;
+    color: #64748b;
+    margin-bottom: 28px;
+    margin-top: 4px;
+  }
+
+  /* AI INSIGHTS */
+  .insights-container {
+    background: linear-gradient(135deg, #0a2540 0%, #0d3a5a 100%);
+    border-radius: 16px;
+    padding: 40px;
+    color: white;
+    position: relative;
+    overflow: hidden;
+  }
+  .insights-container::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 200px; height: 200px;
+    background: rgba(14,165,233,0.1);
+    border-radius: 50%;
+  }
+  .insights-summary {
+    font-size: 16px;
+    line-height: 1.8;
+    color: #cbd5e1;
+    margin-bottom: 32px;
+    max-width: 900px;
+  }
+  .insights-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+  }
+  .insight-card {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px;
+    padding: 22px;
+  }
+  .insight-card-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #38bdf8;
+    margin-bottom: 8px;
+  }
+  .insight-card-text {
+    font-size: 14px;
+    color: #e2e8f0;
+    line-height: 1.6;
+  }
+
+  /* KPI CARDS */
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+  }
+  .kpi-card {
+    background: white;
+    border-radius: 14px;
+    padding: 28px 24px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    border: 1px solid #e8edf2;
+    position: relative;
+    overflow: hidden;
+  }
+  .kpi-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: #0ea5e9;
+    border-radius: 14px 14px 0 0;
+  }
+  .kpi-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: #64748b;
+    margin-bottom: 10px;
+  }
+  .kpi-value {
+    font-size: 38px;
+    font-weight: 800;
+    color: #0a2540;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .kpi-sub {
+    font-size: 12px;
+    color: #64748b;
+    line-height: 1.5;
+    margin-bottom: 10px;
+  }
+  .kpi-source {
+    font-size: 10px;
+    font-weight: 600;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    margin-bottom: 8px;
+  }
+  .kpi-delta {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 20px;
+    background: #f1f5f9;
+    color: #64748b;
+  }
+
+  /* FUNNEL */
+  .funnel-container {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    flex-wrap: wrap;
+  }
+  .funnel-step {
+    flex: 1;
+    min-width: 140px;
+    background: white;
+    border-radius: 0;
+    padding: 28px 20px;
+    text-align: center;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    border: 1px solid #e8edf2;
+    border-right: none;
+    position: relative;
+  }
+  .funnel-step:first-child { border-radius: 14px 0 0 14px; }
+  .funnel-step:last-child { border-radius: 0 14px 14px 0; border-right: 1px solid #e8edf2; }
+  .funnel-step::after {
+    content: '→';
+    position: absolute;
+    right: -14px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 20px;
+    color: #0ea5e9;
+    font-weight: 700;
+    z-index: 2;
+    background: #f0f2f5;
+    padding: 2px 0;
+  }
+  .funnel-step:last-child::after { display: none; }
+  .funnel-step-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: #64748b;
+    margin-bottom: 10px;
+  }
+  .funnel-step-value {
+    font-size: 32px;
+    font-weight: 800;
+    color: #0a2540;
+    margin-bottom: 6px;
+  }
+  .funnel-step-sub {
+    font-size: 12px;
+    color: #64748b;
+    margin-bottom: 8px;
+  }
+  .funnel-step-delta {
+    font-size: 11px;
+    font-weight: 600;
+    color: #94a3b8;
+    background: #f8fafc;
+    padding: 2px 8px;
+    border-radius: 10px;
+    display: inline-block;
+  }
+
+  /* BREAKDOWN TABLE */
+  .table-card {
+    background: white;
+    border-radius: 14px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    border: 1px solid #e8edf2;
+    overflow: hidden;
+    margin-bottom: 24px;
+  }
+  .table-card-header {
+    padding: 20px 28px;
+    background: #f8fafc;
+    border-bottom: 1px solid #e8edf2;
+    font-size: 14px;
+    font-weight: 700;
+    color: #0a2540;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  th {
+    padding: 12px 28px;
+    text-align: left;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.7px;
+    color: #64748b;
+    background: #f8fafc;
+    border-bottom: 1px solid #e8edf2;
+  }
+  td {
+    padding: 14px 28px;
+    font-size: 14px;
+    color: #334155;
+    border-bottom: 1px solid #f1f5f9;
+  }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #f8fafc; }
+  .td-value { font-weight: 700; color: #0a2540; }
+  .tag { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; }
+  .tag-green { background: #dcfce7; color: #166534; }
+  .tag-yellow { background: #fef9c3; color: #854d0e; }
+  .tag-gray { background: #f1f5f9; color: #475569; }
+  .tag-blue { background: #dbeafe; color: #1e40af; }
+
+  /* OBSERVATIONS */
+  .obs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+  }
+  .obs-card {
+    background: white;
+    border-radius: 14px;
+    padding: 24px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    border: 1px solid #e8edf2;
+    border-left: 4px solid #0ea5e9;
+  }
+  .obs-card.obs-warn { border-left-color: #f59e0b; }
+  .obs-card.obs-info { border-left-color: #8b5cf6; }
+  .obs-num {
+    font-size: 11px;
+    font-weight: 700;
+    color: #0ea5e9;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 8px;
+  }
+  .obs-title { font-size: 15px; font-weight: 700; color: #0a2540; margin-bottom: 8px; }
+  .obs-text { font-size: 13px; color: #475569; line-height: 1.6; }
+
+  /* HIGH INTENT */
+  .intent-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+  }
+  .intent-card {
+    background: white;
+    border-radius: 14px;
+    padding: 26px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    border: 1px solid #e8edf2;
+  }
+  .intent-card-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+  .intent-icon {
+    width: 36px; height: 36px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+  }
+  .intent-icon-blue { background: #dbeafe; }
+  .intent-icon-green { background: #dcfce7; }
+  .intent-icon-purple { background: #ede9fe; }
+  .intent-icon-orange { background: #ffedd5; }
+  .intent-card-title { font-size: 15px; font-weight: 700; color: #0a2540; }
+  .intent-card-sub { font-size: 12px; color: #64748b; }
+  .intent-stat { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f1f5f9; }
+  .intent-stat:last-child { border-bottom: none; }
+  .intent-stat-label { font-size: 13px; color: #475569; }
+  .intent-stat-value { font-size: 14px; font-weight: 700; color: #0a2540; }
+
+  /* OPTIMIZATION */
+  .opt-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+  }
+  .opt-card {
+    background: white;
+    border-radius: 14px;
+    padding: 26px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    border: 1px solid #e8edf2;
+  }
+  .opt-num {
+    font-size: 11px;
+    font-weight: 700;
+    color: #0ea5e9;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 10px;
+  }
+  .opt-title { font-size: 15px; font-weight: 700; color: #0a2540; margin-bottom: 14px; }
+  .opt-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+    align-items: flex-start;
+  }
+  .opt-row-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.7px;
+    min-width: 70px;
+    padding-top: 2px;
+  }
+  .opt-row-label.trigger { color: #f59e0b; }
+  .opt-row-label.action { color: #0ea5e9; }
+  .opt-row-label.outcome { color: #22c55e; }
+  .opt-row-text { font-size: 13px; color: #475569; line-height: 1.5; }
+
+  /* CHANGE SUMMARY */
+  .change-card {
+    background: white;
+    border-radius: 14px;
+    padding: 36px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    border: 1px solid #e8edf2;
+    text-align: center;
+  }
+  .change-baseline-badge {
+    display: inline-block;
+    background: #fef9c3;
+    color: #854d0e;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 8px 20px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+  }
+  .change-title { font-size: 20px; font-weight: 800; color: #0a2540; margin-bottom: 12px; }
+  .change-text { font-size: 15px; color: #475569; line-height: 1.7; max-width: 700px; margin: 0 auto 28px; }
+  .change-metrics {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    flex-wrap: wrap;
+    margin-top: 24px;
+    padding-top: 24px;
+    border-top: 1px solid #f1f5f9;
+  }
+  .change-metric { text-align: center; }
+  .change-metric-value { font-size: 28px; font-weight: 800; color: #0a2540; }
+  .change-metric-label { font-size: 12px; color: #64748b; margin-top: 4px; }
+
+  /* FOOTER */
+  .footer {
+    background: #0a2540;
+    color: #64748b;
+    text-align: center;
+    padding: 32px 60px;
+    font-size: 12px;
+    line-height: 1.8;
+  }
+  .footer strong { color: #94a3b8; }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .header { padding: 32px 24px; }
+    .header h1 { font-size: 26px; }
+    .header-top { flex-direction: column; }
+    .header-meta { text-align: left; }
+    .cadence-bar { padding: 24px; flex-direction: column; gap: 20px; }
+    .cadence-block { border-right: none; padding-right: 0; margin-right: 0; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 16px; }
+    .cadence-block:last-child { border-bottom: none; }
+    .main { padding: 36px 24px; }
+    .funnel-container { flex-direction: column; }
+    .funnel-step { border-radius: 14px !important; border-right: 1px solid #e8edf2 !important; margin-bottom: 8px; }
+    .funnel-step::after { display: none; }
+    .footer { padding: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════ HEADER -->
+<div class="header">
+  <div class="header-top">
+    <div>
+      <div class="header-badges">
+        <span class="badge badge-confidential">🔒 Confidential</span>
+        <span class="badge badge-biweekly">Biweekly Report</span>
+        <span class="badge badge-baseline">📊 Baseline Period</span>
+        <span class="badge badge-report">Report #001</span>
+      </div>
+      <h1>Kiel Thomson <span>Company</span></h1>
+      <div class="header-sub">Performance Dashboard — Powered by MercenaryMarketing.ai</div>
+      <div class="header-sub" style="margin-top:8px;">Reporting Period: <strong style="color:#e2e8f0;">April 7 – April 21, 2026</strong></div>
+    </div>
+    <div class="header-meta">
+      <div class="header-logo">MercenaryMarketing.ai</div>
+      <div class="period">Generated: April 21, 2026</div>
+      <div class="period">Next Update: May 5, 2026</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ CADENCE BAR -->
+<div class="cadence-bar">
+  <div class="cadence-block">
+    <div class="cadence-label">Report Cadence</div>
+    <div class="cadence-value">Biweekly</div>
+    <div class="cadence-note">Every 2 weeks</div>
+  </div>
+  <div class="cadence-block">
+    <div class="cadence-label">Next Update</div>
+    <div class="cadence-value">May 5, 2026</div>
+    <div class="cadence-note">Report #002</div>
+  </div>
+  <div class="cadence-block">
+    <div class="cadence-label">Data Sources</div>
+    <div class="cadence-value">Prosp + MMai</div>
+    <div class="cadence-note">LinkedIn / Email / SMS / Sequences / Lists</div>
+  </div>
+  <div class="cadence-block">
+    <div class="cadence-label">Comparison Status</div>
+    <div class="cadence-value">Baseline Set</div>
+    <div class="cadence-note">Period-over-period begins Report #002</div>
+  </div>
+  <div class="cadence-block">
+    <div class="cadence-label">Report Status</div>
+    <div class="cadence-value" style="color:#f59e0b;">Baseline Period</div>
+    <div class="cadence-note">All metrics are benchmark values</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ MAIN -->
+<div class="main">
+
+  <!-- ── AI INSIGHTS ── -->
+  <div class="section">
+    <div class="section-title">
+      <div class="icon">🤖</div>
+      AI Insights
+    </div>
+    <div class="section-subtitle">Pattern analysis across all active channels — Prosp (LinkedIn) + MMai (Email / SMS)</div>
+    <div class="insights-container">
+      <div class="insights-summary">
+        This is the baseline reporting period for Kiel Thomson Company. Across all active channels, the program generated <strong style="color:#38bdf8;">988 LinkedIn connection requests</strong>, achieved a <strong style="color:#38bdf8;">17.3% acceptance rate</strong>, and produced <strong style="color:#38bdf8;">44 LinkedIn replies</strong> — establishing a strong foundation for the outreach funnel. On the MMai side, <strong style="color:#38bdf8;">5 active email/SMS sequences</strong> are live targeting 3,276 enrolled contacts across four renovation intent audiences and an anonymous website visitor segment. The Kitchen Renovation audience is the largest and most active, with 1,174 enrolled contacts. The Architect Partners sequence is driving the highest reply rate at 35.3%, signaling strong ICP resonance with that audience. Anonymous website visitor outreach is showing the highest completion rate of any active MMai sequence, indicating strong deliverability and list quality. All baseline metrics are now set — next cycle will provide the first period-over-period comparison.
+      </div>
+      <div class="insights-grid">
+        <div class="insight-card">
+          <div class="insight-card-label">🏆 Strongest Channel</div>
+          <div class="insight-card-text">LinkedIn via Prosp is generating the most measurable engagement this period. 173 conversations started and 44 replies across 3 sequences establishes a solid baseline for conversion tracking.</div>
+        </div>
+        <div class="insight-card">
+          <div class="insight-card-label">🎯 Highest Reply Rate</div>
+          <div class="insight-card-text">KTC – ICP 2 (Architect Partners) achieved a 35.3% reply-to-conversation rate — the highest of any sequence. This audience is responding well to the current messaging approach.</div>
+        </div>
+        <div class="insight-card">
+          <div class="insight-card-label">📈 Largest Audience</div>
+          <div class="insight-card-text">Kitchen Renovation Intent is the largest AI-built audience with 1,842 contacts identified and 1,174 already enrolled in the MMai sequence. Highest volume opportunity in the funnel.</div>
+        </div>
+        <div class="insight-card">
+          <div class="insight-card-label">🌐 Website Signal</div>
+          <div class="insight-card-text">199 anonymous website visitors identified — 103 new since last view. The dedicated outreach sequence has the highest step-completion rate of all active MMai sequences, suggesting strong list quality.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── EXECUTIVE SUMMARY ── -->
+  <div class="section">
+    <div class="section-title">
+      <div class="icon">📋</div>
+      Executive Summary
+    </div>
+    <div class="section-subtitle">Key performance indicators across all active channels — baseline values</div>
+    <div class="kpi-grid">
+
+      <div class="kpi-card">
+        <div class="kpi-label">Intent Signals</div>
+        <div class="kpi-value">5,627</div>
+        <div class="kpi-sub">AI-identified contacts showing active renovation intent across 4 categories + 199 anonymous website visitors</div>
+        <div class="kpi-source">Source: MMai — AI Intent Lists</div>
+        <div class="kpi-delta">Δ vs Last Period: — (Baseline)</div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-label">Contacts Added</div>
+        <div class="kpi-value">3,276</div>
+        <div class="kpi-sub">Enrolled across 5 active MMai sequences — Kitchen, Primary Suite, Outdoor Living, Whole House, Website Visitors</div>
+        <div class="kpi-source">Source: MMai — Sequences</div>
+        <div class="kpi-delta">Δ vs Last Period: — (Baseline)</div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-label">Outreach Sent</div>
+        <div class="kpi-value">1,676</div>
+        <div class="kpi-sub">988 LinkedIn requests (Prosp) + 688 MMai email/SMS sequence steps executed this period</div>
+        <div class="kpi-source">Source: Prosp + MMai</div>
+        <div class="kpi-delta">Δ vs Last Period: — (Baseline)</div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-label">Conversations Started</div>
+        <div class="kpi-value">173</div>
+        <div class="kpi-sub">LinkedIn conversations opened across 3 Prosp sequences following connection acceptance</div>
+        <div class="kpi-source">Source: Prosp (LinkedIn)</div>
+        <div class="kpi-delta">Δ vs Last Period: — (Baseline)</div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-label">Replies Received</div>
+        <div class="kpi-value">44</div>
+        <div class="kpi-sub">LinkedIn replies across all 3 Prosp sequences — 25.4% reply-to-conversation rate</div>
+        <div class="kpi-source">Source: Prosp (LinkedIn)</div>
+        <div class="kpi-delta">Δ vs Last Period: — (Baseline)</div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-label">Meetings Booked</div>
+        <div class="kpi-value">—</div>
+        <div class="kpi-sub">Not yet reported for this period. Will track via Calendly starting next cycle.</div>
+        <div class="kpi-source">Source: Calendly (client-reported)</div>
+        <div class="kpi-delta">Δ vs Last Period: — (Baseline)</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── FUNNEL OVERVIEW ── -->
+  <div class="section">
+    <div class="section-title">
+      <div class="icon">🔻</div>
+      Funnel Overview
+    </div>
+    <div class="section-subtitle">Intent → Outreach → Engagement → Conversations → Meetings</div>
+    <div class="funnel-container">
+      <div class="funnel-step">
+        <div class="funnel-step-label">Intent</div>
+        <div class="funnel-step-value">5,627</div>
+        <div class="funnel-step-sub">AI-identified contacts showing renovation intent</div>
+        <div class="funnel-step-delta">Baseline</div>
+      </div>
+      <div class="funnel-step">
+        <div class="funnel-step-label">Outreach</div>
+        <div class="funnel-step-value">1,676</div>
+        <div class="funnel-step-sub">LinkedIn requests + MMai steps executed</div>
+        <div class="funnel-step-delta">Baseline</div>
+      </div>
+      <div class="funnel-step">
+        <div class="funnel-step-label">Engagement</div>
+        <div class="funnel-step-value">171</div>
+        <div class="funnel-step-sub">LinkedIn invites accepted — 17.3% acceptance rate</div>
+        <div class="funnel-step-delta">Baseline</div>
+      </div>
+      <div class="funnel-step">
+        <div class="funnel-step-label">Conversations</div>
+        <div class="funnel-step-value">44</div>
+        <div class="funnel-step-sub">LinkedIn replies — 25.4% reply-to-conversation rate</div>
+        <div class="funnel-step-delta">Baseline</div>
+      </div>
+      <div class="funnel-step">
+        <div class="funnel-step-label">Meetings</div>
+        <div class="funnel-step-value">—</div>
+        <div class="funnel-step-sub">Calendly tracking begins next cycle</div>
+        <div class="funnel-step-delta">Baseline</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── PERFORMANCE BREAKDOWN ── -->
+  <div class="section">
+    <div class="section-title">
+      <div class="icon">📊</div>
+      Performance Breakdown
+    </div>
+    <div class="section-subtitle">Channel-level and campaign-level metrics — all values are baseline benchmarks</div>
+
+    <!-- Prosp LinkedIn Breakdown -->
+    <div class="table-card">
+      <div class="table-card-header">🔗 Prosp — LinkedIn Sequence Breakdown</div>
+      <table>
+        <thead>
+          <tr>
+            <th>Sequence</th>
+            <th>Requests Sent</th>
+            <th>Accepted</th>
+            <th>Acceptance Rate</th>
+            <th>Conversations</th>
+            <th>Replies</th>
+            <th>Reply Rate</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="td-value">KTC – Main</td>
+            <td>698</td>
+            <td>134</td>
+            <td>19.2%</td>
+            <td>136</td>
+            <td>33</td>
+            <td>24.3%</td>
+            <td><span class="tag tag-blue">Baseline</span></td>
+          </tr>
+          <tr>
+            <td class="td-value">KTC – ICP 1 (Construction)</td>
+            <td>141</td>
+            <td>20</td>
+            <td>14.2%</td>
+            <td>20</td>
+            <td>5</td>
+            <td>25.0%</td>
+            <td><span class="tag tag-blue">Baseline</span></td>
+          </tr>
+          <tr>
+            <td class="td-value">KTC – ICP 2 (Architect Partners)</td>
+            <td>149</td>
+            <td>17</td>
+            <td>11.4%</td>
+            <td>17</td>
+            <td>6</td>
+            <td>35.3%</td>
+            <td><span class="tag tag-green">Highest Reply Rate</span></td>
+          </tr>
+          <tr style="background:#f8fafc; font-weight:700;">
+            <td class="td-value">TOTAL</td>
+            <td>988</td>
+            <td>171</td>
+            <td>17.3%</td>
+            <td>173</td>
+            <td>44</td>
+            <td>25.4%</td>
+            <td><span class="tag tag-blue">Baseline</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- MMai Sequence Breakdown -->
+    <div class="table-card">
+      <div class="table-card-header">⚡ MMai — Active Sequence Breakdown</div>
+      <table>
+        <thead>
+          <tr>
+            <th>Sequence</th>
+            <th>Enrolled</th>
+            <th>In Progress</th>
+            <th>Completed</th>
+            <th>Steps Executed</th>
+            <th>Bounces</th>
+            <th>Replies</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="td-value">Kitchen Renovation Intent</td>
+            <td>1,174</td>
+            <td>37</td>
+            <td>22</td>
+            <td>123</td>
+            <td>0</td>
+            <td>0</td>
+            <td><span class="tag tag-green">Active</span></td>
+          </tr>
+          <tr>
+            <td class="td-value">Whole House Renovation Intent</td>
+            <td>664</td>
+            <td>148</td>
+            <td>0</td>
+            <td>282</td>
+            <td>1</td>
+            <td>0</td>
+            <td><span class="tag tag-green">Active</span></td>
+          </tr>
+          <tr>
+            <td class="td-value">Primary Suite Renovation Intent</td>
+            <td>588</td>
+            <td>77</td>
+            <td>7</td>
+            <td>110</td>
+            <td>0</td>
+            <td>0</td>
+            <td><span class="tag tag-green">Active</span></td>
+          </tr>
+          <tr>
+            <td class="td-value">Outdoor Living Renovation Intent</td>
+            <td>653</td>
+            <td>33</td>
+            <td>0</td>
+            <td>33</td>
+            <td>0</td>
+            <td>0</td>
+            <td><span class="tag tag-green">Active</span></td>
+          </tr>
+          <tr>
+            <td class="td-value">Anonymous Website Visitors</td>
+            <td>197</td>
+            <td>31</td>
+            <td>33</td>
+            <td>140</td>
+            <td>2</td>
+            <td>0</td>
+            <td><span class="tag tag-green">Highest Completion</span></td>
+          </tr>
+          <tr style="background:#f8fafc; font-weight:700;">
+            <td class="td-value">TOTAL</td>
+            <td>3,276</td>
+            <td>326</td>
+            <td>62</td>
+            <td>688</td>
+            <td>3</td>
+            <td>0</td>
+            <td><span class="tag tag-blue">Baseline</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- AI Intent Audiences -->
+    <div class="table-card">
+      <div class="table-card-header">🧠 MMai — AI Intent Audiences (All Lists)</div>
+      <table>
+        <thead>
+          <tr>
+            <th>Audience List</th>
+            <th>Total Contacts</th>
+            <th>New Since Last View</th>
+            <th>Automations</th>
+            <th>Category</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="td-value">KTC_Kitchen_Renovation_Intent</td>
+            <td>1,842</td>
+            <td>270</td>
+            <td>1</td>
+            <td><span class="tag tag-green">Active Intent</span></td>
+          </tr>
+          <tr>
+            <td class="td-value">KTC_Primary_Suite_Renovation_Intent</td>
+            <td>942</td>
+            <td>300</td>
+            <td>1</td>
+            <td><span class="tag tag-green">Active Intent</span></td>
+          </tr>
+          <tr>
+            <td class="td-value">KTC_Whole_House_Renovation_Intent</td>
+            <td>870</td>
+            <td>420</td>
+            <td>1</td>
+            <td><span class="tag tag-green">Active Intent</span></td>
+          </tr>
+          <tr>
+            <td class="td-value">KTC_Outdoor_Living_Renovation_Intent</td>
+            <td>782</td>
+            <td>420</td>
+            <td>1</td>
+            <td><span class="tag tag-green">Active Intent</span></td>
+          </tr>
+          <tr>
+            <td class="td-value">KTC_Anonymous_Website_Visitors</td>
+            <td>199</td>
+            <td>103</td>
+            <td>1</td>
+            <td><span class="tag tag-blue">Website Signal</span></td>
+          </tr>
+          <tr>
+            <td class="td-value">Consumers</td>
+            <td>285</td>
+            <td>—</td>
+            <td>0</td>
+            <td><span class="tag tag-gray">Static List</span></td>
+          </tr>
+          <tr>
+            <td class="td-value">Designers</td>
+            <td>273</td>
+            <td>—</td>
+            <td>0</td>
+            <td><span class="tag tag-gray">ICP / Partner</span></td>
+          </tr>
+          <tr>
+            <td class="td-value">Architects</td>
+            <td>218</td>
+            <td>—</td>
+            <td>0</td>
+            <td><span class="tag tag-gray">ICP / Partner</span></td>
+          </tr>
+          <tr style="background:#f8fafc; font-weight:700;">
+            <td class="td-value">TOTAL (Intent + Website)</td>
+            <td>5,411</td>
+            <td>1,513 new</td>
+            <td>5</td>
+            <td><span class="tag tag-blue">Baseline</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ── PERFORMANCE INSIGHTS ── -->
+  <div class="section">
+    <div class="section-title">
+      <div class="icon">💡</div>
+      Performance Insights
+    </div>
+    <div class="section-subtitle">Data-backed observations from this reporting period</div>
+    <div class="obs-grid">
+      <div class="obs-card">
+        <div class="obs-num">Observation 01</div>
+        <div class="obs-title">Architect ICP Has the Strongest Reply Signal</div>
+        <div class="obs-text">Despite the lowest acceptance rate (11.4%), the Architect Partners sequence produced a 35.3% reply-to-conversation rate — the highest of any sequence. This indicates the messaging is highly resonant with this audience once they're connected, even if getting them to accept takes more volume.</div>
+      </div>
+      <div class="obs-card obs-warn">
+        <div class="obs-num">Observation 02</div>
+        <div class="obs-title">MMai Email/SMS Replies Are at Zero — Expected at This Stage</div>
+        <div class="obs-text">All 5 active MMai sequences show 0 replies. Given the sequences launched in mid-March and are still ramping, this is expected. The Whole House sequence has the highest in-progress count (148), suggesting a reply wave may be incoming as those contacts progress through multi-step flows.</div>
+      </div>
+      <div class="obs-card">
+        <div class="obs-num">Observation 03</div>
+        <div class="obs-title">Website Visitor Sequence Has the Best Completion Rate</div>
+        <div class="obs-text">The Anonymous Website Visitor sequence has 33 completions out of 197 enrolled (16.8% completion rate) — the highest of any active sequence. This audience has demonstrated intent by visiting the site, which likely explains stronger engagement with outreach.</div>
+      </div>
+      <div class="obs-card obs-info">
+        <div class="obs-num">Observation 04</div>
+        <div class="obs-title">Intent Audience Is Growing Rapidly</div>
+        <div class="obs-text">1,513 new contacts were added across intent lists since last view — with Whole House and Outdoor Living each adding 420 new signals. This suggests strong ongoing market activity in the renovation space that the program is actively capturing.</div>
+      </div>
+      <div class="obs-card obs-warn">
+        <div class="obs-num">Observation 05</div>
+        <div class="obs-title">Construction ICP Acceptance Rate Needs Monitoring</div>
+        <div class="obs-text">The Construction ICP sequence has a 14.2% acceptance rate — below the 17.3% overall average. Only 20 conversations were started from 141 requests. This audience may require messaging refinement or a tighter ICP filter to improve connection quality.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── HIGH INTENT SIGNALS ── -->
+  <div class="section">
+    <div class="section-title">
+      <div class="icon">🔥</div>
+      High-Intent Activity Signals
+    </div>
+    <div class="section-subtitle">Strong prospect engagement patterns and multi-touch signals identified this period</div>
+    <div class="intent-grid">
+      <div class="intent-card">
+        <div class="intent-card-header">
+          <div class="intent-icon intent-icon-blue">🏠</div>
+          <div>
+            <div class="intent-card-title">Kitchen Renovation Audience</div>
+            <div class="intent-card-sub">Largest intent pool — highest enrollment volume</div>
+          </div>
+        </div>
+        <div class="intent-stat"><span class="intent-stat-label">Intent Contacts Identified</span><span class="intent-stat-value">1,842</span></div>
+        <div class="intent-stat"><span class="intent-stat-label">Enrolled in Sequence</span><span class="intent-stat-value">1,174</span></div>
+        <div class="intent-stat"><span class="intent-stat-label">New Signals This Period</span><span class="intent-stat-value">270</span></div>
+        <div class="intent-stat"><span class="intent-stat-label">Steps Executed</span><span class="intent-stat-value">123</span></div>
+      </div>
+      <div class="intent-card">
+        <div class="intent-card-header">
+          <div class="intent-icon intent-icon-green">🌿</div>
+          <div>
+            <div class="intent-card-title">Whole House Renovation</div>
+            <div class="intent-card-sub">Highest MMai sequence activity — 282 steps executed</div>
+          </div>
+        </div>
+        <div class="intent-stat"><span class="intent-stat-label">Intent Contacts Identified</span><span class="intent-stat-value">870</span></div>
+        <div class="intent-stat"><span class="intent-stat-label">Enrolled in Sequence</span><span class="intent-stat-value">664</span></div>
+        <div class="intent-stat"><span class="intent-stat-label">New Signals This Period</span><span class="intent-stat-value">420</span></div>
+        <div class="intent-stat"><span class="intent-stat-label">Steps Executed</span><span class="intent-stat-value">282</span></div>
+      </div>
+      <div class="intent-card">
+        <div class="intent-card-header">
+          <div class="intent-icon intent-icon-purple">🌐</div>
+          <div>
+            <div class="intent-card-title">Anonymous Website Visitors</div>
+            <div class="intent-card-sub">Highest-intent signal — visited KTC website</div>
+          </div>
+        </div>
+        <div class="intent-stat"><span class="intent-stat-label">Visitors Identified</span><span class="intent-stat-value">199</span></div>
+        <div class="intent-stat"><span class="intent-stat-label">New Since Last View</span><span class="intent-stat-value">103</span></div>
+        <div class="intent-stat"><span class="intent-stat-label">Enrolled in Sequence</span><span class="intent-stat-value">197</span></div>
+        <div class="intent-stat"><span class="intent-stat-label">Sequence Completion Rate</span><span class="intent-stat-value">16.8%</span></div>
+      </div>
+      <div class="intent-card">
+        <div class="intent-card-header">
+          <div class="intent-icon intent-icon-orange">🏗️</div>
+          <div>
+            <div class="intent-card-title">Architect Partner Replies</div>
+            <div class="intent-card-sub">Highest LinkedIn reply rate — 35.3%</div>
+          </div>
+        </div>
+        <div class="intent-stat"><span class="intent-stat-label">Requests Sent</span><span class="intent-stat-value">149</span></div>
+        <div class="intent-stat"><span class="intent-stat-label">Accepted</span><span class="intent-stat-value">17 (11.4%)</span></div>
+        <div class="intent-stat"><span class="intent-stat-label">Conversations Started</span><span class="intent-stat-value">17</span></div>
+        <div class="intent-stat"><span class="intent-stat-label">Replies Received</span><span class="intent-stat-value">6 (35.3%)</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── OPTIMIZATION FOCUS ── -->
+  <div class="section">
+    <div class="section-title">
+      <div class="icon">⚙️</div>
+      What We're Working On to Improve Performance
+    </div>
+    <div class="section-subtitle">Specific optimization actions tied to expected outcomes — next 2-week cycle</div>
+    <div class="opt-grid">
+      <div class="opt-card">
+        <div class="opt-num">Action 01</div>
+        <div class="opt-title">Architect Messaging Amplification</div>
+        <div class="opt-row">
+          <div class="opt-row-label trigger">Trigger</div>
+          <div class="opt-row-text">Architect ICP has a 35.3% reply rate — highest of any sequence — but only 149 requests were sent this period</div>
+        </div>
+        <div class="opt-row">
+          <div class="opt-row-label action">Action</div>
+          <div class="opt-row-text">Increase weekly LinkedIn request volume for the Architect sequence and test a follow-up message variant focused on project collaboration</div>
+        </div>
+        <div class="opt-row">
+          <div class="opt-row-label outcome">Outcome</div>
+          <div class="opt-row-text">More conversations and replies from a proven high-response audience — expected to improve overall reply count by next cycle</div>
+        </div>
+      </div>
+      <div class="opt-card">
+        <div class="opt-num">Action 02</div>
+        <div class="opt-title">Construction ICP Audience Refinement</div>
+        <div class="opt-row">
+          <div class="opt-row-label trigger">Trigger</div>
+          <div class="opt-row-text">Construction ICP acceptance rate (14.2%) is below average, with only 20 conversations from 141 requests</div>
+        </div>
+        <div class="opt-row">
+          <div class="opt-row-label action">Action</div>
+          <div class="opt-row-text">Tighten ICP filters — focus on GCs and project managers with active residential remodel projects; review and refine connection request message</div>
+        </div>
+        <div class="opt-row">
+          <div class="opt-row-label outcome">Outcome</div>
+          <div class="opt-row-text">Higher acceptance rate and more qualified conversations — target 18%+ acceptance rate by Report #003</div>
+        </div>
+      </div>
+      <div class="opt-card">
+        <div class="opt-num">Action 03</div>
+        <div class="opt-title">MMai Sequence Reply Activation</div>
+        <div class="opt-row">
+          <div class="opt-row-label trigger">Trigger</div>
+          <div class="opt-row-text">All 5 MMai sequences show 0 replies — 326 contacts are currently in-progress across active sequences</div>
+        </div>
+        <div class="opt-row">
+          <div class="opt-row-label action">Action</div>
+          <div class="opt-row-text">Review step timing and CTA clarity — ensure each step has a clear, low-friction reply prompt; add a direct question CTA to any step currently missing one</div>
+        </div>
+        <div class="opt-row">
+          <div class="opt-row-label outcome">Outcome</div>
+          <div class="opt-row-text">First MMai replies tracked by Report #002 — establishes email/SMS as a second active reply channel alongside LinkedIn</div>
+        </div>
+      </div>
+      <div class="opt-card">
+        <div class="opt-num">Action 04</div>
+        <div class="opt-title">Website Visitor Sequence Scaling</div>
+        <div class="opt-row">
+          <div class="opt-row-label trigger">Trigger</div>
+          <div class="opt-row-text">Anonymous website visitor sequence has the highest completion rate (16.8%) — 103 new visitors identified in this period alone</div>
+        </div>
+        <div class="opt-row">
+          <div class="opt-row-label action">Action</div>
+          <div class="opt-row-text">Ensure all new visitor identifications are being auto-enrolled in real-time; review automation trigger to confirm no enrollment lag</div>
+        </div>
+        <div class="opt-row">
+          <div class="opt-row-label outcome">Outcome</div>
+          <div class="opt-row-text">Faster outreach to highest-intent visitors — expected to improve completion count and generate first website-sourced replies</div>
+        </div>
+      </div>
+      <div class="opt-card">
+        <div class="opt-num">Action 05</div>
+        <div class="opt-title">Meetings Tracking Setup</div>
+        <div class="opt-row">
+          <div class="opt-row-label trigger">Trigger</div>
+          <div class="opt-row-text">Meetings booked are not currently being tracked — 44 LinkedIn replies represent warm prospects who may have converted</div>
+        </div>
+        <div class="opt-row">
+          <div class="opt-row-label action">Action</div>
+          <div class="opt-row-text">Connect Calendly reporting to the dashboard cycle — client to report meeting count each period or integrate Calendly directly</div>
+        </div>
+        <div class="opt-row">
+          <div class="opt-row-label outcome">Outcome</div>
+          <div class="opt-row-text">Full funnel visibility from Intent → Meeting by Report #002 — enables ROI calculation and conversion rate optimization</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── CHANGE SUMMARY ── -->
+  <div class="section">
+    <div class="section-title">
+      <div class="icon">📝</div>
+      What Changed Since the Last Update
+    </div>
+    <div class="section-subtitle">Benchmark report — all metrics are being established for the first time this cycle</div>
+    <div class="change-card">
+      <div class="change-baseline-badge">📊 Baseline Report — Report #001</div>
+      <div class="change-title">This Is the Benchmark Period</div>
+      <div class="change-text">
+        This is the first biweekly performance report for Kiel Thomson Company. All metrics captured here serve as the baseline benchmark. No prior-period comparisons exist yet. Beginning with Report #002 (May 5, 2026), every metric will be compared against these baseline values to track growth, identify trends, and measure the impact of optimizations made between cycles.
+      </div>
+      <div class="change-metrics">
+        <div class="change-metric">
+          <div class="change-metric-value">988</div>
+          <div class="change-metric-label">LinkedIn Requests — Baseline</div>
+        </div>
+        <div class="change-metric">
+          <div class="change-metric-value">17.3%</div>
+          <div class="change-metric-label">Acceptance Rate — Baseline</div>
+        </div>
+        <div class="change-metric">
+          <div class="change-metric-value">173</div>
+          <div class="change-metric-label">Conversations — Baseline</div>
+        </div>
+        <div class="change-metric">
+          <div class="change-metric-value">44</div>
+          <div class="change-metric-label">Replies — Baseline</div>
+        </div>
+        <div class="change-metric">
+          <div class="change-metric-value">3,276</div>
+          <div class="change-metric-label">MMai Enrolled — Baseline</div>
+        </div>
+        <div class="change-metric">
+          <div class="change-metric-value">5,627</div>
+          <div class="change-metric-label">Intent Signals — Baseline</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /main -->
+
+<!-- FOOTER -->
+<div class="footer">
+  <strong>MercenaryMarketing.ai</strong> — Kiel Thomson Company Performance Dashboard<br>
+  Report #001 | Baseline Period | April 7–21, 2026 | Confidential — For Internal Use Only<br>
+  Next Report: May 5, 2026 | Data Sources: Prosp (LinkedIn) + MMai (Email / SMS / Sequences / Lists / AI Intent)
+</div>
+
+</body>
+</html>
