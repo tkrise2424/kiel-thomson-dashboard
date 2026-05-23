@@ -88,11 +88,12 @@ document.getElementById('cbNext').textContent = notes.nextReport;
 var h = '';
 
 // ALL ACTIVE banner
-h += '<div class="alert-banner" style="background:#e8f5e9;border-left:4px solid #4caf50;color:#2e7d32"><h3>ALL 4 SEQUENCES ACTIVE &amp; SENDING</h3><p>' + notes.clientRequest + '</p></div>';
+document.getElementById('activeSeqCount').textContent = ov.activeSequences;
+h += '<div class="alert-banner" style="background:#e8f5e9;border-left:4px solid #4caf50;color:#2e7d32"><h3>ALL <span id="activeSeqCount"></span> SEQUENCES ACTIVE &amp; SENDING</h3><p>' + notes.clientRequest + '</p></div>';
 
 // Pipeline Overview
 h += '<div class="section"><div class="section-title">Pipeline Overview</div><div class="kpi-grid">';
-h += kc('Total Members', ov.totalMembers, 'across 3 sequences');
+h += kc('Total Members', ov.totalMembers, 'across ' + ov.activeSequences + ' sequences');
 h += kc('Completed', ov.completedMembers, 'all steps finished');
 h += kc('In Progress', ov.inProgressMembers, 'mid-sequence');
 h += kc('Not Started', ov.notStartedMembers, 'queued in pipeline', ov.notStartedMembers > 100);
@@ -107,12 +108,12 @@ h += kc('Unique Clicks', ov.totalUniqueClicks, 'overall CR: ' + ov.clickRate + '
 h += kc('Total Replies', ov.totalReplies, 'across all sequences');
 h += kc('Total Bounces', ov.totalBounces, 'overall BR: ' + ov.bounceRate + '%');
 h += kc('Out of Office', ov.totalOOO, 'auto-replies');
-h += kc('Bookings', ov.totalBookings, '<span style="color:#888">retail model — N/A</span>');
+h += kc('Bookings', ov.totalBookings, '<span style="color:#888">tracked via CRM/client-side</span>');
 h += '</div>';
 h += '<div class="note-callout" style="margin-top:12px"><strong>Conversion Model:</strong> ' + ov.bookingTrackingNote + '</div></div>';
-h += '<div class="section"><div class="section-title">SMS Channel — Existing Customers</div><div class="kpi-grid">';
-h += kc('SMS Sent', ov.smsSent.toLocaleString(), 'Step 1 of Existing Customers');
-h += kc('SMS Delivered', ov.smsDelivered, 'delivery confirmation');
+h += '<div class="section"><div class="section-title">SMS Channel — Whole House Renovation</div><div class="kpi-grid">';
+h += kc('SMS Sent', ov.smsSent.toLocaleString(), 'Whole House Renovation sequence');
+h += kc('SMS Delivered', ov.smsDelivered, 'platform tracking limited');
 h += kc('Delivery Rate', ov.smsDeliveryRate + '%', '<span style="color:#d32f2f;font-weight:700">CRITICAL — integration broken</span>', true);
 h += '</div>';
 h += '<div class="note-callout" style="margin-top:12px"><strong>SMS Note:</strong> ' + notes.smsNote + '</div></div>';
