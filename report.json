@@ -1,0 +1,305 @@
+{
+  "report": {
+    "client": "Kiel Thomson Company",
+    "reportNumber": 2,
+    "periodLabel": "32-Day Interim",
+    "periodStart": "4/22/2026",
+    "periodEnd": "5/23/2026",
+    "periodDays": 32,
+    "generated": "2026-05-23 16:30 EDT",
+    "dashboardUrl": "https://kiel-thomson-company.mercenarymarketing.ai/",
+    "companyId": "wmdg0w80860js3i9",
+    "prosp": false,
+    "status": "published"
+  },
+  "overview": {
+    "totalMembers": 3801,
+    "completedMembers": 165,
+    "inProgressMembers": 476,
+    "notStartedMembers": 3160,
+    "totalSent": 3017,
+    "activeSequences": 5,
+    "totalSequences": 18,
+    "pausedSequences": 13,
+    "totalUniqueOpens": 153,
+    "openRate": "5.07",
+    "totalUniqueClicks": 63,
+    "clickRate": "2.09",
+    "totalReplies": 2,
+    "totalBounces": 19,
+    "bounceRate": "0.63",
+    "totalOOO": 1,
+    "totalBookings": 0,
+    "bookingTrackingNote": "Bookings not applicable — tracked via CRM or client-side.",
+    "pendingApprovals": 347,
+    "smsSent": 119,
+    "smsDelivered": 0,
+    "smsDeliveryRate": "0.00"
+  },
+  "comparison": {
+    "baseline": {
+      "period": "4/7/2026 – 4/21/2026 (Report #1)",
+      "executions": 1676,
+      "opens": "Not tracked",
+      "clicks": "Not tracked",
+      "replies": 44,
+      "replyNote": "44 LinkedIn replies tracked in baseline",
+      "bounces": 3,
+      "bounceRate": "0.18",
+      "activeSequences": 5,
+      "completedMembers": 62,
+      "inProgress": 326,
+      "intentSignals": 5627,
+      "contactsAdded": 3276,
+      "anonymousVisitors": 199,
+      "linkedinRequests": 988,
+      "linkedinAccepted": 171,
+      "smsSent": "None"
+    },
+    "current": {
+      "executions": 3017,
+      "opens": 153,
+      "clicks": 63,
+      "replies": 2,
+      "repliesNote": "Email only; LinkedIn paused this period",
+      "bounces": 19,
+      "bounceRate": "0.63",
+      "activeSequences": 5,
+      "completedMembers": 165,
+      "inProgress": 476,
+      "notStarted": 3160,
+      "smsSent": 119,
+      "openRate": "5.07",
+      "clickRate": "2.09",
+      "replyRate": "0.07"
+    },
+    "periodDelta": {
+      "executions": "+1,341",
+      "executionsPct": "+80%",
+      "opens": "+153 (new tracking)",
+      "clicks": "+63 (new tracking)",
+      "replies": "−42 (LinkedIn paused; 2 new email replies)",
+      "bounces": "+16",
+      "bouncesPct": "+533%",
+      "completedMembers": "+103",
+      "completedMembersPct": "+166%",
+      "inProgressChange": "+150",
+      "inProgressPct": "+46%",
+      "notStarted": "+3,160 (new metric)",
+      "smsSent": "+119 (new channel)",
+      "activeSequences": "No change (5)",
+      "linkedinNote": "LinkedIn campaigns not active this period (per client confirmation)"
+    }
+  },
+  "sequences": [
+    {
+      "name": "KTC — Whole House Renovation Intent",
+      "note": "4-step (Email + SMS + 2 Email) · sender: Anna",
+      "status": "ACTIVE",
+      "members": 693,
+      "completedMembers": 21,
+      "inProgress": 212,
+      "notStarted": 460,
+      "sent": 501,
+      "uniqueOpens": 27,
+      "openRate": 5.39,
+      "uniqueClicks": 8,
+      "clickRate": 1.60,
+      "replies": 0,
+      "bounces": 2,
+      "bounceRate": 0.40,
+      "smsSent": 119,
+      "smsDelivered": 0,
+      "highlights": [
+        "Email 1: 9.83% OR, 2.56% CR (234 sent)",
+        "SMS Day 3: 119 sent, 0% delivery — integration broken",
+        "Email 3 Day 12: 9.52% OR, 4.76% CR"
+      ]
+    },
+    {
+      "name": "KTC — Primary Suite Renovation Intent",
+      "note": "3-step email · sender: Anna",
+      "status": "ACTIVE",
+      "members": 707,
+      "completedMembers": 15,
+      "inProgress": 147,
+      "notStarted": 545,
+      "sent": 216,
+      "uniqueOpens": 13,
+      "openRate": 6.02,
+      "uniqueClicks": 4,
+      "clickRate": 1.85,
+      "replies": 0,
+      "bounces": 1,
+      "bounceRate": 0.46,
+      "highlights": [
+        "Email 1: 5.56% OR, 2.47% CR (162 sent)",
+        "Email 2 Day 4: 7.69% OR (39 sent)",
+        "545 still queued — large untapped audience"
+      ]
+    },
+    {
+      "name": "KTC — Kitchen Renovation Intent",
+      "note": "3-step email · sender: Anna",
+      "status": "ACTIVE",
+      "members": 1383,
+      "completedMembers": 57,
+      "inProgress": 41,
+      "notStarted": 1285,
+      "sent": 231,
+      "uniqueOpens": 25,
+      "openRate": 10.82,
+      "uniqueClicks": 7,
+      "clickRate": 3.03,
+      "replies": 0,
+      "bounces": 0,
+      "bounceRate": 0.00,
+      "highlights": [
+        "Email 1: 11.22% OR (98 sent) — strongest opener",
+        "Email 3 Day 10: 15.79% OR, 8.77% CR (57 sent) — TOP performer",
+        "Largest audience: 1,383 members, 1,285 still queued"
+      ]
+    },
+    {
+      "name": "KTC — Outdoor Living Renovation Intent",
+      "note": "3-step email · sender: Anna",
+      "status": "ACTIVE",
+      "members": 683,
+      "completedMembers": 0,
+      "inProgress": 33,
+      "notStarted": 650,
+      "sent": 33,
+      "uniqueOpens": 1,
+      "openRate": 3.03,
+      "uniqueClicks": 2,
+      "clickRate": 6.06,
+      "replies": 0,
+      "bounces": 0,
+      "bounceRate": 0.00,
+      "highlights": [
+        "Email 1 only: 3.03% OR, 6.06% CR (33 sent)",
+        "650 still queued — sequence just started ramping",
+        "Steps 2–3 have not yet fired"
+      ]
+    },
+    {
+      "name": "KTC — Anonymous Website Visitors",
+      "note": "3-step email · sender: Anna",
+      "status": "ACTIVE",
+      "members": 335,
+      "completedMembers": 72,
+      "inProgress": 43,
+      "notStarted": 220,
+      "sent": 274,
+      "uniqueOpens": 20,
+      "openRate": 7.30,
+      "uniqueClicks": 0,
+      "clickRate": 0.00,
+      "replies": 0,
+      "bounces": 3,
+      "bounceRate": 1.09,
+      "highlights": [
+        "Steady open rates: 6.03% → 8.14% → 8.33% across steps",
+        "No clicks — landing page or offer may need review",
+        "72 completed, 220 queued"
+      ]
+    }
+  ],
+  "pausedSequences": [
+    {
+      "name": "ICP 3: Luxury Homes — AI Sourced Seq 2 (New)",
+      "note": "Re-built sequence; 114 members, 15 completed, 99 in-progress",
+      "status": "PAUSED"
+    },
+    {
+      "name": "ICP 1: Construction Designers Seq 1 (New)",
+      "note": "162 members, 75 completed, 87 in-progress, 1 reply",
+      "status": "PAUSED"
+    },
+    {
+      "name": "ICP 2: Architect Partnership Seq 1 (New)",
+      "note": "132 members, 59 completed, 73 in-progress, 1 reply",
+      "status": "PAUSED"
+    },
+    {
+      "name": "ICP 3: Luxury Homes Seq 1 (New)",
+      "note": "271 members, 56 completed, 215 in-progress",
+      "status": "PAUSED"
+    },
+    {
+      "name": "9 legacy x-prefixed sequences",
+      "note": "Old ICP versions — 0–217 members each — candidates for cleanup",
+      "status": "PAUSED"
+    }
+  ],
+  "insights": [
+    {
+      "severity": "positive",
+      "title": "Open & Click Tracking Now Live — 153 Opens, 63 Clicks in Period",
+      "detail": "Baseline had no email open/click data. Now tracking: 5.07% overall open rate, 2.09% click rate. Kitchen Renovation leads at 10.82% OR / 3.03% CR."
+    },
+    {
+      "severity": "positive",
+      "title": "Kitchen Renovation Is the Top Performer",
+      "detail": "Email 3 hit 15.79% open rate and 8.77% click rate — 5x the average click rate. 1,383 total members with 1,285 still queued represents the biggest pipeline."
+    },
+    {
+      "severity": "positive",
+      "title": "Email Volume Scaled +80% Over Baseline",
+      "detail": "1,341 new executions this period vs. 1,676 all-time baseline. 3,160 not-started members queued across 5 active sequences — massive future pipeline."
+    },
+    {
+      "severity": "warning",
+      "title": "SMS Channel Broken — 119 Sent, 0% Delivery",
+      "detail": "Whole House sequence SMS step sent 119 messages with 0 delivered. Phone integration needs immediate attention — same issue seen on other client accounts."
+    },
+    {
+      "severity": "warning",
+      "title": "Outdoor Living Barely Moving — Only 33 Executions from 683 Members",
+      "detail": "Sequence just started firing Email 1. 650 members still queued. Steps 2–3 haven't sent yet. May need pacing review or additional audience."
+    },
+    {
+      "severity": "neutral",
+      "title": "LinkedIn Channel Dormant This Period",
+      "detail": "Baseline had 988 connection requests, 171 accepted, 44 replies on LinkedIn. No Prosp campaigns active this period per client confirmation. 13 paused sequences include legacy ICP outreach versions."
+    },
+    {
+      "severity": "neutral",
+      "title": "347 Pending Approvals — Sequence Health Check Needed",
+      "detail": "High pending-approval count may indicate rate-limiting, validation issues, or sender reputation checks. Review before next period."
+    }
+  ],
+  "nextSteps": [
+    {
+      "priority": "high",
+      "action": "Fix SMS phone integration — 0% delivery rate blocking Whole House SMS step",
+      "detail": "Phone integration ID a9a64fee-4d91-4d40-bdab-66f5af013df8 needs reconnection. Same issue across multiple MMai client accounts."
+    },
+    {
+      "priority": "high",
+      "action": "Investigate 347 pending approvals across active sequences",
+      "detail": "Check for sender reputation issues, rate limiting, or validation blockers. 347 queued approvals may indicate a backend bottleneck."
+    },
+    {
+      "priority": "medium",
+      "action": "Ramp Outdoor Living sequence pacing",
+      "detail": "Only 33 of 683 members reached. If pacing is intentional, consider refreshing audience. Otherwise adjust daily send limits."
+    },
+    {
+      "priority": "medium",
+      "action": "Add landing page link or stronger CTA to Anonymous Visitors sequence",
+      "detail": "7.30% open rate but 0 clicks across 274 sends. Adding a clear CTA or relevant case study link could convert opens to clicks."
+    },
+    {
+      "priority": "low",
+      "action": "Clean up 9 legacy x-prefixed sequences",
+      "detail": "Unused sequences from Jan 2026 with 0 members or stale members. Archive to reduce clutter in sequences dashboard."
+    }
+  ],
+  "notes": {
+    "linkedin": "LinkedIn/Prosp campaigns not active this period per client. Baseline tracked 988 requests, 171 accepted, 44 replies.",
+    "openTracking": "Open and click tracking was not enabled during baseline period (4/7–4/21). Current-period engagement metrics are the first available.",
+    "sms": "Phone integration a9a64fee shows 119 sent but 0 delivered. Same pattern seen on Porch & Patio and NIL Fans accounts.",
+    "nextReport": "June 8, 2026 (Monday)"
+  }
+}
