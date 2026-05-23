@@ -30,7 +30,7 @@
     "bounceRate": "0.63",
     "totalOOO": 1,
     "totalBookings": 0,
-    "bookingTrackingNote": "Email sending limit increased to 30/day across all 5 active sequences this period.",
+    "bookingTrackingNote": "Email sending limit increased to 30/day (from 15) this period \u2014 single sending account for all 5 active sequences.",
     "pendingApprovals": 347,
     "smsSent": 119,
     "smsDelivered": 0,
@@ -243,8 +243,8 @@
     },
     {
       "severity": "neutral",
-      "title": "347 Pending Approvals \u2014 Sequence Health Check Needed",
-      "detail": "High pending-approval count may indicate rate-limiting, validation issues, or sender reputation checks. Review before next period."
+      "title": "347 Pending Approvals \u2014 Normal Queue with 30/Day Shared Cap",
+      "detail": "347 pending executions reflect the queue backing up behind a single shared sending account (30 emails/day across all 5 sequences). With 3,160 queued members, this is expected \u2014 the increased limit (up from 15/day) is actively helping clear the backlog."
     }
   ],
   "nextSteps": [
@@ -255,16 +255,11 @@
     },
     {
       "id": 2,
-      "action": "Investigate 347 pending approvals across active sequences",
-      "detail": "Check for sender reputation issues, rate limiting, or validation blockers. 347 queued approvals may indicate a backend bottleneck."
-    },
-    {
-      "id": 3,
       "action": "Ramp Outdoor Living sequence pacing",
       "detail": "Only 33 of 683 members reached. If pacing is intentional, consider refreshing audience. Otherwise adjust daily send limits."
     },
     {
-      "id": 4,
+      "id": 3,
       "action": "Add landing page link or stronger CTA to Anonymous Visitors sequence",
       "detail": "7.30% open rate but 0 clicks across 274 sends. Adding a clear CTA or relevant case study link could convert opens to clicks."
     }
@@ -274,6 +269,6 @@
     "nextReport": "June 8, 2026 (Monday)",
     "dataAvailability": "Open and click tracking enabled this period for the first time. Baseline had no engagement data. LinkedIn/Prosp not active. SMS delivery data not available in platform.",
     "smsNote": "119 SMS sent, delivery confirmation not available in platform dashboard. Phone integration may need re-authentication or replacement.",
-    "bookingNote": "Email sending limit increased to 30/day (from 15) for the single shared sending account across all 5 active sequences."
+    "bookingNote": "Single shared sending account across all 5 active sequences. Limit raised from 15 to 30 emails/day this period. 347 pending approvals is expected queue behavior under shared cap."
   }
 }
