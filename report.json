@@ -232,9 +232,9 @@
       "detail": "Whole House sequence SMS step sent 119 messages. Platform currently lacks visibility into SMS delivery data \u2014 0% shown may reflect tracking gap rather than actual delivery failure. Needs investigation."
     },
     {
-      "severity": "warning",
-      "title": "Outdoor Living Barely Moving \u2014 Only 33 Executions from 683 Members",
-      "detail": "Sequence just started firing Email 1. 650 members still queued. Steps 2\u20133 haven't sent yet. May need pacing review or additional audience."
+      "severity": "neutral",
+      "title": "Outdoor Living Sequence Just Starting \u2014 33 of 683 Reached",
+      "detail": "Only Email 1 has fired so far (33 sent, 2 clicks at 6.06% CR). With the shared 30/day sending cap across 5 active sequences, each sequence gets ~6 emails/day. The 650 remaining members will ramp gradually \u2014 this is expected pacing under the shared cap, not a performance issue."
     },
     {
       "severity": "neutral",
