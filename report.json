@@ -32,9 +32,10 @@
     "totalBookings": 0,
     "bookingTrackingNote": "Email sending limit increased to 30/day (from 15) this period \u2014 single sending account for all 5 active sequences.",
     "pendingApprovals": 347,
-    "smsSent": 119,
-    "smsDelivered": 0,
-    "smsDeliveryRate": "0.00"
+    "smsSent": 231,
+    "smsDelivered": 169,
+    "smsDeliveryRate": "73.16",
+    "smsFailed": 62
   },
   "comparison": {
     "baseline": {
@@ -68,7 +69,7 @@
       "completedMembers": 165,
       "inProgress": 476,
       "notStarted": 3160,
-      "smsSent": 119,
+      "smsSent": 231,
       "openRate": "5.07",
       "clickRate": "2.09",
       "replyRate": "0.07"
@@ -86,7 +87,7 @@
       "inProgressChange": "+150",
       "inProgressPct": "+46%",
       "notStarted": "+3,160 (new metric)",
-      "smsSent": "+119 (new channel)",
+      "smsSent": "+231 (new channel)",
       "activeSequences": "No change (5)",
       "linkedinNote": "LinkedIn campaigns not active this period (per client confirmation)"
     }
@@ -108,13 +109,14 @@
       "replies": 0,
       "bounces": 2,
       "bounceRate": 0.4,
-      "smsSent": 119,
-      "smsDelivered": 0,
+      "smsSent": 231,
+      "smsDelivered": 169,
       "highlights": [
         "Email 1: 9.83% OR, 2.56% CR (234 sent)",
-        "SMS Day 3: 119 sent, 0% delivery \u2014 integration broken",
+        "SMS Day 3: 231 total, 169 delivered (73.16%), 62 failed (26.84%)",
         "Email 3 Day 12: 9.52% OR, 4.76% CR"
-      ]
+      ],
+      "smsFailed": 62
     },
     {
       "name": "KTC \u2014 Primary Suite Renovation Intent",
@@ -228,8 +230,8 @@
     },
     {
       "severity": "warning",
-      "title": "SMS Channel \u2014 119 Sent, 0% Delivery Confirmed",
-      "detail": "Whole House sequence SMS step sent 119 messages. Platform currently lacks visibility into SMS delivery data \u2014 0% shown may reflect tracking gap rather than actual delivery failure. Needs investigation."
+      "title": "SMS Delivery at 73.16% \u2014 62 of 231 Failed",
+      "detail": "Whole House Renovation SMS Day 3: 231 total sends, 169 delivered (73.16%), 62 failed (26.84%). The 62 failures need investigation \u2014 invalid numbers, carrier blocks, or intermittent phone integration issues. Delivery IS happening, unlike the platform aggregate previously suggested."
     },
     {
       "severity": "neutral",
@@ -250,8 +252,8 @@
   "nextSteps": [
     {
       "id": 1,
-      "action": "Fix SMS Delivery Visibility \u2014 0% delivery may be a tracking gap",
-      "detail": "119 SMS sent via Whole House sequence show 0% delivery. The platform currently lacks SMS delivery confirmation data. Determine whether messages are actually delivering and if the phone integration needs re-authentication."
+      "action": "Investigate 62 SMS failures \u2014 26.84% failure rate on Whole House sequence",
+      "detail": "169 of 231 SMS delivered successfully (73.16%). 62 failed \u2014 check for invalid numbers, carrier blocks, or phone integration intermittent issues. Clean or replace failed contacts before next send."
     },
     {
       "id": 2,
@@ -268,7 +270,7 @@
     "clientRequest": "All 5 sequences active and sending across 3,801 total contacts. Kitchen Renovation is the top performer at 10.82% open rate and 3.03% click rate.",
     "nextReport": "June 8, 2026 (Monday)",
     "dataAvailability": "Open and click tracking enabled this period for the first time. Baseline had no engagement data. LinkedIn/Prosp not active. SMS delivery data not available in platform.",
-    "smsNote": "119 SMS sent, delivery confirmation not available in platform dashboard. Phone integration may need re-authentication or replacement.",
+    "smsNote": "231 SMS sent via Whole House Renovation Step 2 (SMS Day 3). 169 delivered (73.16%), 62 failed (26.84%). Platform aggregate showed 0% but step-level metrics confirm real delivery. Integration partially functional \u2014 investigate failures.",
     "bookingNote": "Single shared sending account across all 5 active sequences. Limit raised from 15 to 30 emails/day this period. 347 pending approvals is expected queue behavior under shared cap."
   }
 }
