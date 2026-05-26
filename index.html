@@ -112,7 +112,7 @@ h += '</div>';
 h += '<div class="note-callout" style="margin-top:12px"><strong>Conversion Model:</strong> ' + ov.bookingTrackingNote + '</div></div>';
 h += '<div class="section"><div class="section-title">SMS Channel — Whole House Renovation</div><div class="kpi-grid">';
 h += kc('SMS Sent', ov.smsSent.toLocaleString(), 'Whole House Renovation sequence');
-h += kc('SMS Delivered', ov.smsDelivered, 'platform tracking limited');
+h += kc('SMS Delivered', ov.smsDelivered, 'step-level metrics (not in aggregate)');
 h += kc('Delivery Rate', ov.smsDeliveryRate + '%', '<span style="color:#ed6c02;font-weight:600">169 delivered / 62 failed</span>', false);
 h += '</div>';
 h += '<div class="note-callout" style="margin-top:12px"><strong>SMS Note:</strong> ' + notes.smsNote + '</div></div>';

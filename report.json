@@ -231,7 +231,7 @@
     {
       "severity": "warning",
       "title": "SMS Delivery at 73.16% \u2014 62 of 231 Failed",
-      "detail": "Whole House Renovation SMS Day 3: 231 total sends, 169 delivered (73.16%), 62 failed (26.84%). The 62 failures need investigation \u2014 invalid numbers, carrier blocks, or intermittent phone integration issues. Delivery IS happening, unlike the platform aggregate previously suggested."
+      "detail": "Whole House Renovation SMS Day 3: 231 total sends, 169 delivered (73.16%), 62 failed (26.84%). The 62 failures need investigation \u2014 invalid numbers, carrier blocks, or intermittent phone issues. SMS delivery data comes from step-level metrics, not platform aggregate."
     },
     {
       "severity": "neutral",
@@ -270,7 +270,7 @@
     "clientRequest": "All 5 sequences active and sending across 3,801 total contacts. Kitchen Renovation is the top performer at 10.82% open rate and 3.03% click rate.",
     "nextReport": "June 8, 2026 (Monday)",
     "dataAvailability": "Open and click tracking enabled this period for the first time. Baseline had no engagement data. LinkedIn/Prosp not active. SMS delivery data not available in platform.",
-    "smsNote": "231 SMS sent via Whole House Renovation Step 2 (SMS Day 3). 169 delivered (73.16%), 62 failed (26.84%). Platform aggregate showed 0% but step-level metrics confirm real delivery. Integration partially functional \u2014 investigate failures.",
+    "smsNote": "231 SMS sent via Whole House Renovation Step 2 (SMS Day 3). 169 delivered (73.16%), 62 failed (26.84%). SMS delivery tracked at step level only \u2014 platform aggregate doesn't surface SMS metrics. Investigation should focus on the 62 failures.",
     "bookingNote": "Single shared sending account across all 5 active sequences. Limit raised from 15 to 30 emails/day this period. 347 pending approvals is expected queue behavior under shared cap."
   }
 }
